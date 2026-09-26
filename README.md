@@ -27,25 +27,71 @@ Provider: Wisevolve
 
 `project_url`, `citation`, and `citation_doi` are reserved in the ABI and are currently unset.
 
-## GPUMD integration
+## Build GPUMD with WPE
 
-The standard GPUMD build remains unchanged. WPE support is built with the dedicated
-`makefile_wpe` provided by GPUMD.
-
-From the GPUMD `src/` directory:
+Clone GPUMD and the WPE repository:
 
 ```bash
-make -f makefile_wpe \
-  WPE_ROOT=/path/to/Wisevolve-Potential-Engine \
-  WPE_SO_ROOT=/path/to/wpe.so \
-  CUDA_ARCH="-arch=sm_89"
+git clone https://github.com/brucefan1983/GPUMD.git
+
+git clone -b dev \
+  https://github.com/Wisevolve/Wisevolve-Potential-Engine.git
 ```
 
-`WPE_ROOT` points to this public repository. `WPE_SO_ROOT` points to the separately
-distributed WPE binary package containing `lib/libwisevolve_potential.so`.
+Copy the downloaded WPE binary package to the same directory and extract it:
 
-The WPE build produces a separate `gpumd-wpe` executable and uses isolated build objects,
-leaving the standard GPUMD build unchanged.
+```bash
+cp /path/to/Wisevolve-Potential-Engine-1.0.0-linux-cu128-x86_64.tar.gz .
+
+tar -xzf \
+  Wisevolve-Potential-Engine-1.0.0-linux-cu128-x86_64.tar.gz
+```
+
+The directory should now look like:
+
+```text
+.
+├── GPUMD/
+├── Wisevolve-Potential-Engine/
+└── wpe.so/
+    └── lib/
+        ├── libwisevolve_potential.so
+        ├── libwisevolve_potential.so.1
+        └── libwisevolve_potential.so.1.0.0
+```
+
+Check the required files:
+
+```bash
+ls Wisevolve-Potential-Engine/include/wisevolve_potential_api.h
+ls Wisevolve-Potential-Engine/integration/gpumd/wpe_adapter.cu
+ls wpe.so/lib/libwisevolve_potential.so
+```
+
+Then enter the GPUMD source directory and compile:
+
+```bash
+cd GPUMD/src
+
+make -f makefile_wpe -j4 \
+  WPE_ROOT="$(realpath ../../Wisevolve-Potential-Engine)" \
+  WPE_SO_ROOT="$(realpath ../../wpe.so)" \
+  CUDA_ARCH="-arch=sm_86"
+```
+
+Replace `sm_86` with the CUDA architecture appropriate for your GPU.
+
+After compilation, the WPE-enabled executable is:
+
+```text
+GPUMD/src/gpumd-wpe
+```
+
+You can verify that the WPE shared library is correctly linked with:
+
+```bash
+ldd ./gpumd-wpe | grep wisevolve
+```
 
 ## Licensing
 
