@@ -29,9 +29,23 @@ Provider: Wisevolve
 
 ## GPUMD integration
 
-The standard GPUMD build remains unchanged. A WPE-enabled build uses this repository for the
-public adapter and a separate WPE binary package for the shared library. See the GPUMD
-`WPE_INTEGRATION.md` file for Make and CMake examples.
+The standard GPUMD build remains unchanged. WPE support is built with the dedicated
+`makefile_wpe` provided by GPUMD.
+
+From the GPUMD `src/` directory:
+
+```bash
+make -f makefile_wpe \
+  WPE_ROOT=/path/to/Wisevolve-Potential-Engine \
+  WPE_SO_ROOT=/path/to/wpe.so \
+  CUDA_ARCH="-arch=sm_89"
+```
+
+`WPE_ROOT` points to this public repository. `WPE_SO_ROOT` points to the separately
+distributed WPE binary package containing `lib/libwisevolve_potential.so`.
+
+The WPE build produces a separate `gpumd-wpe` executable and uses isolated build objects,
+leaving the standard GPUMD build unchanged.
 
 ## Licensing
 
