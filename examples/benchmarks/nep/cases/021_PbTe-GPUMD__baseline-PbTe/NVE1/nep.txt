@@ -1,0 +1,1 @@
+../../../potentials/baseline-PbTe/nep.txt

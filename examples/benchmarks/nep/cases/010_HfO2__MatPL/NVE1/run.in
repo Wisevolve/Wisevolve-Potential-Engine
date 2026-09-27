@@ -1,0 +1,12 @@
+replicate 35 35 35
+potential nep.txt
+velocity 1 seed 20260903
+time_step 1.0
+
+# warmup
+ensemble nve
+run 100
+
+# timed production
+ensemble nve
+run 500

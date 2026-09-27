@@ -1,0 +1,1 @@
+../../../potentials/NEP4-3body/nep.txt

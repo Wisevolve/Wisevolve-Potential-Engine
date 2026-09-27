@@ -1,0 +1,1 @@
+../../../potentials/Wu-PbTe-2024/nep.txt

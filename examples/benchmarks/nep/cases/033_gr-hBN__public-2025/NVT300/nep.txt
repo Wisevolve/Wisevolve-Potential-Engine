@@ -1,0 +1,1 @@
+../../../potentials/gr-hBN-public-2025/nep.txt

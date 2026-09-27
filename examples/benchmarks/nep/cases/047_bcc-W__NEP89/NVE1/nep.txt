@@ -1,0 +1,1 @@
+../../../potentials/NEP89/nep.txt
