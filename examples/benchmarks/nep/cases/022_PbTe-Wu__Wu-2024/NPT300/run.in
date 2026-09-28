@@ -1,0 +1,13 @@
+replicate 12 12 13
+potential nep.txt
+velocity 300 seed 20260903
+time_step 1.0
+
+# warmup
+
+ensemble npt_scr 300 300 100 0 0 0 100 100 100 1000
+run 100
+
+# timed production
+ensemble npt_scr 300 300 100 0 0 0 100 100 100 1000
+run 500

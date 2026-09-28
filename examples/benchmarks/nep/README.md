@@ -2,6 +2,8 @@
 
 Each runnable leaf contains only `run.in`, `model.xyz`, and `nep.txt`.
 
+Each repository-resident case provides `NVT300/` and `NPT300/` inputs.
+
 `model.xyz` and `nep.txt` are relative symlinks to the deduplicated backing
 assets under `structures/` and `potentials/`.
 

@@ -8,7 +8,7 @@ used to benchmark WPE against upstream GPUMD.
 - **53 geometry × potential cases**
 - **27 physical structure seeds**
 - **21 distinct NEP model files**
-- two protocols per case: **NVT300** and **NVE1**
+- two protocols per case: **NVT300** and **NPT300**
 - **106 formal tasks**
 - three paired/interleaved GPUMD-vs-WPE repeats per task
 - NVIDIA RTX 5090 GPUs
@@ -20,15 +20,17 @@ Each process used a 100-step warm-up and a 500-step timed production run.
 
 | metric | WPE speedup over upstream GPUMD |
 |---|---:|
-| all 106 tasks, paired geometric mean | **3.719678817×** |
+| all 106 NVT300 + NPT300 tasks, paired geometric mean | **3.493627852×** |
 | NVT300, 53 tasks | **3.687863132×** |
-| NVE1, 53 tasks | **3.751768980×** |
-| minimum task speedup | **2.796868123×** |
-| maximum task speedup | **6.028056469×** |
+| NPT300, 53 tasks | **3.309622709×** |
+| minimum task speedup | **2.358937333×** |
+| maximum task speedup | **5.615665431×** |
 | tasks below 0.99× | **0** |
 
 Raw performance-result files are intentionally not stored in the public examples
-tree; the frozen aggregate result is recorded here.
+tree; the frozen aggregate result is recorded here. NVT300 and NPT300 were
+measured in separate closed RTX 5090 campaigns using the same benchmark matrix
+and the same paired/interleaved three-repeat protocol.
 
 ## Input protocol
 
@@ -50,19 +52,25 @@ ensemble nvt_nhc 300 300 100
 run 500
 ```
 
-Ordinary NVE1:
+Ordinary NPT300 (orthogonal 3D):
 
 ```text
 replicate RX RY RZ
 potential nep.txt
-velocity 1 seed 20260903
+velocity 300 seed 20260903
 time_step 1.0
 
-ensemble nve
+ensemble npt_scr 300 300 100 0 0 0 100 100 100 1000
 run 100
-ensemble nve
+ensemble npt_scr 300 300 100 0 0 0 100 100 100 1000
 run 500
 ```
+
+For slab and non-orthogonal cells, the NPT input preserves the validated
+box constraints used in the benchmark: the vacuum-normal component is frozen
+where applicable, and non-orthogonal cells use the six-component `npt_scr`
+form with shear box degrees of freedom frozen. The exact input is preserved
+in each leaf `run.in`.
 
 Bulk-water cases use `time_step 0.5`; the exact benchmark input is preserved
 in each leaf `run.in`.
@@ -179,5 +187,5 @@ examples/
     ├── potentials/
     └── cases/<case>/
         ├── NVT300/{model.xyz,nep.txt,run.in}
-        └── NVE1/{model.xyz,nep.txt,run.in}
+        └── NPT300/{model.xyz,nep.txt,run.in}
 ```
