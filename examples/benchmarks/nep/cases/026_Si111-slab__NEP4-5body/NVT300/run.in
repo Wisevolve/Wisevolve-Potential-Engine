@@ -1,0 +1,12 @@
+replicate 37 74 1
+potential nep.txt
+velocity 300 seed 20260903
+time_step 1.0
+
+# warmup
+ensemble nvt_nhc 300 300 100
+run 100
+
+# timed production
+ensemble nvt_nhc 300 300 100
+run 500

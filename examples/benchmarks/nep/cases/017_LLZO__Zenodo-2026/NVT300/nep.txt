@@ -1,0 +1,1 @@
+../../../potentials/LLZO-Zenodo-2026/nep.txt

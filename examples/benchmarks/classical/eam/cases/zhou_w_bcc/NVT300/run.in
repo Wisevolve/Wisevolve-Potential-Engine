@@ -1,0 +1,8 @@
+replicate 6 6 6
+potential potential.txt
+velocity 300 seed 20260910
+time_step 1
+ensemble nvt_nhc 300 300 100
+run 20
+ensemble nvt_nhc 300 300 100
+run 5000

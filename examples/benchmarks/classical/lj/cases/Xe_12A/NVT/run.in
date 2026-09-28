@@ -1,0 +1,12 @@
+replicate 48 48 48
+potential lj.txt
+velocity 130 seed 20260903
+time_step 2.0
+
+# warmup
+ensemble nvt_nhc 130 130 100
+run 20
+
+# timed production
+ensemble nvt_nhc 130 130 100
+run 5000

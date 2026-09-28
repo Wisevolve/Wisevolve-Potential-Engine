@@ -1,0 +1,1 @@
+../../../potentials/BaTiO3-Zenodo-2026/nep.txt

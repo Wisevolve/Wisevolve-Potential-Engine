@@ -1,0 +1,1 @@
+../../../potentials/MatPL-HfO2/nep.txt
