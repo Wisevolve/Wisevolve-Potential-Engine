@@ -1,0 +1,7 @@
+potential nep.txt
+velocity 300 seed 20260926
+time_step 0.5
+ensemble pimd_scr 32 300 300 4000 0 100 1000
+run 100
+ensemble pimd_scr 32 300 300 4000 0 100 1000
+run 1000

@@ -1,7 +1,7 @@
 # WPE examples and benchmarks
 
-This directory contains a minimal WPE quickstart and the ordinary-NEP input set
-used to benchmark WPE against upstream GPUMD.
+This directory contains a minimal WPE quickstart and runnable benchmark inputs
+for ordinary NEP, classical potentials, qNEP, and PIMD.
 
 ## What was benchmarked
 
@@ -189,3 +189,17 @@ examples/
         ├── NVT300/{model.xyz,nep.txt,run.in}
         └── NPT300/{model.xyz,nep.txt,run.in}
 ```
+
+<!-- WPE_EXTRA_BENCHMARKS_BEGIN -->
+## Additional benchmark families
+
+Additional runnable inputs are available under `benchmarks/`:
+
+- `classical/lj/` — Lennard-Jones benchmarks for Ar, Kr, and Xe
+- `classical/eam/` — EAM benchmarks for elemental metals
+- `classical/tersoff/` — Tersoff-1989 benchmarks for Si and SiGe
+- `qnep/` — qNEP benchmarks for water and BaTiO3
+- `pimd/` — 1,536-atom, 32-bead water PIMD example
+
+See `benchmarks/README.md` and the README in each family for usage.
+<!-- WPE_EXTRA_BENCHMARKS_END -->
