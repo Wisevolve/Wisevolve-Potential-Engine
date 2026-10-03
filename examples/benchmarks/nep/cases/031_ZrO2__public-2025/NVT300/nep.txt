@@ -1,0 +1,1 @@
+../../../potentials/ZrO2-public-2025/nep.txt

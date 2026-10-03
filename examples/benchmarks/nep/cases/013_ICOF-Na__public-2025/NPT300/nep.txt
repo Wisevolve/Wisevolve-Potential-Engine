@@ -1,0 +1,1 @@
+../../../potentials/ICOF-public-2025/nep.txt

@@ -1,0 +1,47 @@
+Wisevolve Potential Engine — Public Components Licensing
+======================================================
+
+Copyright (c) 2026 Wisevolve.
+
+This public repository contains components under different licenses. The
+license is determined by path and by the SPDX identifier in each source file.
+
+1. Public C interface
+---------------------
+
+  include/wisevolve_potential_api.h
+
+is licensed under the BSD 2-Clause License. A copy is provided in
+LICENSES/BSD-2-Clause.txt. This permission covers the public interface header
+only and does not grant any right to the proprietary Wisevolve Potential Engine
+implementation.
+
+2. GPUMD integration
+--------------------
+
+All files under:
+
+  integration/gpumd/
+
+are licensed under the GNU General Public License, version 3 or (at your option)
+any later version (GPL-3.0-or-later). A copy of GPL version 3 is provided in
+LICENSES/GPL-3.0.txt.
+
+3. No engine license is granted here
+-------------------------------------
+
+The proprietary WPE engine, CUDA kernels, runtime implementation, and shared
+library are not licensed by this public repository. Their use is governed by
+the Wisevolve Potential Engine Proprietary Software License Agreement supplied
+with the WPE binary/private distribution.
+
+4. Separate permissions
+-----------------------
+
+If a separate written agreement or additional permission applies to a specific
+copy or distribution, that separate agreement controls to the extent it grants
+additional rights.
+
+Nothing in this repository grants an exception from the license terms of GPUMD
+or any other third-party work. Distribution of a combined executable remains
+subject to all licenses that apply to that combined distribution.

@@ -1,0 +1,1 @@
+../../../potentials/Wu-Si-2024/nep.txt

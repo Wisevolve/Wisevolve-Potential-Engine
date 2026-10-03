@@ -1,0 +1,9 @@
+potential nep.txt
+kspace pppm
+velocity 300 seed 20260918
+time_step 1
+add_efield 0 0 0.001 0 0 bec
+ensemble nvt_nhc 300 300 100
+run 20
+ensemble nvt_nhc 300 300 100
+run 5000
