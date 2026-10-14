@@ -125,5 +125,5 @@ may differ from those reported by native GPUMD.
 ## Licensing
 
 - `include/wisevolve_potential_api.h`: BSD-2-Clause;
-- `integration/gpumd/`: GPL-3.0-or-later;
+- `integration/gpumd/`: LGPL-3.0-or-later;
 - the separately distributed WPE engine: proprietary WPE license.

@@ -23,9 +23,10 @@ All files under:
 
   integration/gpumd/
 
-are licensed under the GNU General Public License, version 3 or (at your option)
-any later version (GPL-3.0-or-later). A copy of GPL version 3 is provided in
-LICENSES/GPL-3.0.txt.
+are licensed under the GNU Lesser General Public License, version 3 or (at your
+option) any later version (LGPL-3.0-or-later). The LGPL version 3 text is
+provided in LICENSES/LGPL-3.0.txt, together with the GPL version 3 text in
+LICENSES/GPL-3.0.txt, which the LGPL incorporates.
 
 3. No engine license is granted here
 -------------------------------------
