@@ -9,7 +9,7 @@ Zheyong Fan and the respective GPUMD contributors. Wisevolve modifications and
 additional integration code are copyright 2026 Wisevolve.
 
 The public C interface header is separately licensed under BSD-2-Clause.
-The GPUMD integration is licensed GPL-3.0-or-later.
+The GPUMD integration is licensed LGPL-3.0-or-later.
 
 Wisevolve Potential Engine and WPE implementation code are separate from these
 public components and are not made open source by this notice.

@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-License-Identifier: LGPL-3.0-or-later
  *
  * Portions copyright 2017-2026 Zheyong Fan and GPUMD contributors.
  * Modifications and additional integration code copyright (c) 2026 Wisevolve.
