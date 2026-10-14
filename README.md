@@ -13,19 +13,39 @@ The repository does not contain the proprietary WPE engine/runtime or CUDA kerne
 
 ## Runtime information
 
-`wpe_get_info()` exposes stable engine metadata. The shared library reports its engine name and
-version once when a WPE context is created. The GPUMD adapter prints the provider and, when
-available, the project website, citation, and citation DOI. Empty optional metadata fields are
-not printed.
-
-For the current release the visible startup metadata is:
+`wpe_get_info()` exposes the engine name, version, and optional release metadata.
+The WPE-enabled GPUMD adapter prints the following metadata once, followed by a blank line:
 
 ```text
 Potential engine: Wisevolve Potential Engine 1.0.0
-Provider: Wisevolve
+Citation: Hekai Bu and Zheyong Fan, arXiv:2610.17366 (2026)
+Citation DOI: https://doi.org/10.48550/arXiv.2610.17366
 ```
 
-`project_url`, `citation`, and `citation_doi` are reserved in the ABI and are currently unset.
+## Citation
+
+Hekai Bu and Zheyong Fan, *Wisevolve Potential Engine: Machine-Learning Molecular Dynamics
+at 100 Million Atom-Steps per Second on a Single GPU*, arXiv:2610.17366 (2026).
+https://doi.org/10.48550/arXiv.2610.17366
+
+## Compatibility and limitations
+
+WPE is an optional, single-visible-GPU potential-evaluation backend for GPUMD. It supports
+selected NEP/NEP-ZBL, qNEP (PPPM or Ewald), LJ, EAM, and Tersoff 1989 models, together with
+selected simulation stages, D3 corrections, and NEP/qNEP PIMD workflows. Support depends on
+the model shape, boundary conditions, requested calculations, and available GPU memory.
+Unsupported models and workflows are not automatically delegated to native GPUMD.
+
+WPE does not support multiple simultaneous potentials, `active`, `dump_observer`, or workflows
+that require accessing a native GPUMD potential's neighbor list. qNEP requires periodic
+boundaries along all three axes. Classical-potential PIMD and some other PIMD combinations
+are not supported. For unsupported workflows, use the standard GPUMD executable.
+
+For qNEP simulations using PPPM, WPE and native GPUMD may use different conventions for
+assigning reciprocal-space electrostatic energy to individual atoms. This does not change
+the underlying total electrostatic energy or force formulation, but per-atom potential
+energies and observables derived from them may differ. Per-atom energy partitioning is not
+unique for general many-body and long-range interactions.
 
 ## Build GPUMD with WPE
 
@@ -34,20 +54,21 @@ Clone GPUMD and the WPE repository:
 ```bash
 git clone https://github.com/brucefan1983/GPUMD.git
 
-git clone -b dev \
-  https://github.com/Wisevolve/Wisevolve-Potential-Engine.git
+git clone https://github.com/Wisevolve/Wisevolve-Potential-Engine.git
 ```
 
-Copy the downloaded WPE binary package to the same directory and extract it:
+Select a WPE binary package compatible with your GPU architecture, CUDA runtime, and
+system C library, and extract it alongside the cloned repositories. The archive name
+depends on the selected build:
 
 ```bash
-cp /path/to/Wisevolve-Potential-Engine-1.0.0-linux-cu128-x86_64.tar.gz .
-
-tar -xzf \
-  Wisevolve-Potential-Engine-1.0.0-linux-cu128-x86_64.tar.gz
+WPE_ARCHIVE="/path/to/your-WPE-1.0.0-binary-package.tar.gz"
+tar -xzf "$WPE_ARCHIVE"
 ```
 
-The directory should now look like:
+The build instructions below assume the extracted shared library is under `wpe.so/lib/`.
+If your selected package uses another directory name, use that directory as `WPE_SO_ROOT`.
+The expected directory layout for this example is:
 
 ```text
 .
@@ -79,7 +100,9 @@ make -f makefile_wpe -j4 \
   CUDA_ARCH="-arch=sm_86"
 ```
 
-Replace `sm_86` with the CUDA architecture appropriate for your GPU.
+Replace `sm_86` with the CUDA architecture appropriate for your GPU (for example,
+`sm_120` for an RTX 5090, with a CUDA toolkit that supports it). The GPUMD and WPE copies
+of `wisevolve_potential_api.h` must match exactly for the `makefile_wpe` build check.
 
 After compilation, the WPE-enabled executable is:
 
