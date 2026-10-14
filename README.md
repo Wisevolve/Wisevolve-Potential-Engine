@@ -28,25 +28,6 @@ Hekai Bu and Zheyong Fan, *Wisevolve Potential Engine: Machine-Learning Molecula
 at 100 Million Atom-Steps per Second on a Single GPU*, arXiv:2610.17366 (2026).
 https://doi.org/10.48550/arXiv.2610.17366
 
-## Compatibility and limitations
-
-WPE is an optional, single-visible-GPU potential-evaluation backend for GPUMD. It supports
-selected NEP/NEP-ZBL, qNEP (PPPM or Ewald), LJ, EAM, and Tersoff 1989 models, together with
-selected simulation stages, D3 corrections, and NEP/qNEP PIMD workflows. Support depends on
-the model shape, boundary conditions, requested calculations, and available GPU memory.
-Unsupported models and workflows are not automatically delegated to native GPUMD.
-
-WPE does not support multiple simultaneous potentials, `active`, `dump_observer`, or workflows
-that require accessing a native GPUMD potential's neighbor list. qNEP requires periodic
-boundaries along all three axes. Classical-potential PIMD and some other PIMD combinations
-are not supported. For unsupported workflows, use the standard GPUMD executable.
-
-For qNEP simulations using PPPM, WPE and native GPUMD may use different conventions for
-assigning reciprocal-space electrostatic energy to individual atoms. This does not change
-the underlying total electrostatic energy or force formulation, but per-atom potential
-energies and observables derived from them may differ. Per-atom energy partitioning is not
-unique for general many-body and long-range interactions.
-
 ## Build GPUMD with WPE
 
 Clone GPUMD and the WPE repository:
@@ -115,6 +96,31 @@ You can verify that the WPE shared library is correctly linked with:
 ```bash
 ldd ./gpumd-wpe | grep wisevolve
 ```
+
+## Compatibility and limitations
+
+WPE is an optional GPUMD potential-evaluation backend with the following
+WPE-specific limitations:
+
+- **GPU:** Only one visible GPU is supported; multi-GPU execution is not supported.
+- **Potentials:** WPE supports NEP4/NEP4-ZBL, qNEP (PPPM or Ewald), LJ, EAM
+  (Zhou 2004 and Dai 2006), and Tersoff 1989, with D3 corrections for eligible
+  NEP-family workflows. Other GPUMD potential families and multiple simultaneous
+  potentials are not supported by WPE.
+- **NEP model shapes:** `l_max_3body` must equal `4`, and ANN hidden width must
+  not exceed `256`.
+- **PIMD:** Selected NEP4, NEP4-ZBL, and qNEP models are supported. PIMD with
+  LJ, EAM, or Tersoff potentials is not supported.
+- **Commands and ensembles:** `active`, `dump_observer`, `ensemble ti_liquid`,
+  `ensemble ti_spring`, `ensemble ti_rs`, and `ensemble ti_as` are not supported.
+
+To keep the shared-library size manageable, WPE selectively supports model
+shapes rather than every configuration accepted by GPUMD. Unsupported WPE
+workflows do not automatically fall back to native GPUMD; use its standard
+executable instead.
+
+For qNEP simulations using PPPM, per-atom potential energies reported by WPE
+may differ from those reported by native GPUMD.
 
 ## Licensing
 
