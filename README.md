@@ -30,7 +30,7 @@ https://doi.org/10.48550/arXiv.2610.17366
 
 ## Build GPUMD with WPE
 
-Clone GPUMD and the WPE repository:
+Clone GPUMD (please use GPUMD master) and the WPE repository:
 
 ```bash
 git clone https://github.com/brucefan1983/GPUMD.git
