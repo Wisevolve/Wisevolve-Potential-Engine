@@ -1,0 +1,1 @@
+../../../potentials/LLZO-Fan-2026/nep.txt

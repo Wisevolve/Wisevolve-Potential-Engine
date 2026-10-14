@@ -1,1 +1,0 @@
-../../../potentials/LiH-public-2024/nep.txt

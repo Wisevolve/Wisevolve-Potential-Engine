@@ -1,0 +1,1 @@
+../../../potentials/Al2O3-Yang-2025/nep.txt
