@@ -1,0 +1,1 @@
+../../../potentials/MgOH-Fan-2026/nep.txt

@@ -1,0 +1,1 @@
+../../../potentials/gr-hBN-Liang-2026/nep.txt

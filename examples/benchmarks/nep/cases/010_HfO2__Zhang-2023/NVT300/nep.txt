@@ -1,0 +1,1 @@
+../../../potentials/HfO2-Zhang-2023/nep.txt

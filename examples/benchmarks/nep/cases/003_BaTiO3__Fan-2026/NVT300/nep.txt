@@ -1,0 +1,1 @@
+../../../potentials/BaTiO3-Fan-2026/nep.txt

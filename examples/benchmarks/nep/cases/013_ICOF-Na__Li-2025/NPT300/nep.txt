@@ -1,0 +1,1 @@
+../../../potentials/ICOF-Li-2025/nep.txt

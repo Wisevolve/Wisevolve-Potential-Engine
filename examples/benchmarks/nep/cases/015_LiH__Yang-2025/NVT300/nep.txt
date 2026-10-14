@@ -1,0 +1,1 @@
+../../../potentials/LiH-Yang-2025/nep.txt
