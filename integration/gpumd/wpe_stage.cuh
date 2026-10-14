@@ -19,9 +19,12 @@
  * Incremental GPUMD -> WPE stage state.
  *
  * GPUMD already parses run.in sequentially.  The WPE integration therefore
- * observes the same token stream instead of pre-scanning an input container and trying
- * to replay a parallel stage plan.  Persistent commands (ensemble/kspace/
- * dftd3) update state; run-scoped consumers accumulate facts until a direct
+ * observes the same token stream. At the first potential command, this
+ * GPUMD-specific bridge reads run.in once with the host RunInput parser.
+ * D3 and kspace are potential-wide options in the host input snapshot.
+ * D3 may appear after a run command.
+ * Persistent commands (ensemble/kspace) update state;
+ * run-scoped consumers accumulate facts until a direct
  * stage command is reached.  The resulting WpeStageInfo is consumed
  * immediately by wpe_activate_stage().
  */
@@ -37,10 +40,13 @@ public:
     WpeStageInfo& stage);
 
 private:
+  void initialize_potential_options();
+
   std::string ensemble_name_;
   uint32_t pimd_beads_ = 0u;
   bool pimd_eco_configuration_ = false;
   uint32_t qnep_kspace_method_ = WPE_QNEP_KSPACE_PPPM;
+  double qnep_pppm_spacing_ = 1.0;
 
   bool dftd3_enabled_ = false;
   std::string dftd3_functional_;
@@ -48,4 +54,6 @@ private:
   float dftd3_rc_coordination_number_ = 0.0f;
 
   uint64_t pending_run_facts_ = 0u;
+  bool potential_options_initialized_ = false;
+  bool is_qnep_ = false;
 };

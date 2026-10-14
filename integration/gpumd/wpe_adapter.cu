@@ -58,24 +58,14 @@ WpeForceAdapter::WpeForceAdapter(
       gpumd_wpe_fatal("Wisevolve Potential Engine returned incompatible metadata");
     }
 
-    if (engine_info.provider != nullptr && engine_info.provider[0] != '\0') {
-      std::printf("Provider: %s\n", engine_info.provider);
-    }
-    if (engine_info.struct_size >=
-          offsetof(WpeInfo, project_url) + sizeof(engine_info.project_url) &&
-        engine_info.project_url != nullptr && engine_info.project_url[0] != '\0') {
-      std::printf("Website: %s\n", engine_info.project_url);
-    }
-    if (engine_info.struct_size >=
-          offsetof(WpeInfo, citation) + sizeof(engine_info.citation) &&
-        engine_info.citation != nullptr && engine_info.citation[0] != '\0') {
+    if (engine_info.name != nullptr && engine_info.version != nullptr)
+      std::printf("Potential engine: %s %s\n", engine_info.name, engine_info.version);
+    if (engine_info.citation != nullptr && engine_info.citation[0] != '\0')
       std::printf("Citation: %s\n", engine_info.citation);
-    }
-    if (engine_info.struct_size >=
-          offsetof(WpeInfo, citation_doi) + sizeof(engine_info.citation_doi) &&
-        engine_info.citation_doi != nullptr && engine_info.citation_doi[0] != '\0') {
-      std::printf("DOI: %s\n", engine_info.citation_doi);
-    }
+    if (engine_info.citation_doi != nullptr && engine_info.citation_doi[0] != '\0')
+      std::printf("Citation DOI: %s\n", engine_info.citation_doi);
+    // A single blank line separates the complete metadata block from run output.
+    std::printf("\n");
     metadata_reported = true;
   }
 }
